@@ -1,0 +1,9 @@
+auto_mix_prep==0.2.0
+fastapi==0.75.2
+mongoengine==0.24.1
+pydantic==1.9.0
+pymongo==4.1.1
+requests==2.22.0
+SQLAlchemy==1.4.35
+starlette==0.17.1
+dotenv
