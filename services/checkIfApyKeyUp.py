@@ -16,9 +16,11 @@ def checkApikeyUp(apikey, destiny):
 
     if destiny is None:
         return True
-
+# LIO
     destinyHost = getHostFrom(destiny)
+
     if destinyHost != getHostFrom(SERVICES_HOST):
-        return checkHostExists(destinyHost)
+        aux = checkHostExists(destinyHost)
+        return aux
 
     return True

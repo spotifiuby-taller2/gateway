@@ -29,3 +29,14 @@ def getHostFrom(url):
 
     print("destinyHost: " + destinyHost[:endIndex])
     return destinyHost[:endIndex]
+
+
+def getMethodFrom(redirectTo):
+    firstColon = redirectTo.index(":")
+    firstSlash = redirectTo[firstColon:].index("/")
+    firstQuestionMark = redirectTo[firstSlash:].index("?")
+    if firstQuestionMark < 0:
+        secondSlash = redirectTo[firstSlash:].index("/")
+        return redirectTo[secondSlash + 1:]
+
+    return "services"
