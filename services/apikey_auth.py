@@ -45,11 +45,8 @@ def _getServices(apiKey):
     if apikey_found_and_active(str(apiKey)) == False:
         error = {"error": "No Autorizado"}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
-
-    # LIO
     availableServices = getAvailableServicesFromDB()
     print(availableServices)
-
     return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
 
 
@@ -126,7 +123,8 @@ async def disableApiKey(request: Request):
 
 @router.get(SERVICES_URL, response_model=List[Apikey], tags=["services"])
 async def getServices(apiKey: str, request: Request):
-    return _getServices(apiKey)
+    aux = _getServices(apiKey)
+    return aux
 
 
 methodToCall = {
@@ -142,7 +140,6 @@ async def redirect(request: Request):
     logging.info("request a" + REDIRECT_URL)
     currentApikey = str(body['apiKey'])
     currentRedirectTo = str(body['redirectTo'])
-    # LIO
     apikeyUp = checkApikeyUp(currentApikey, currentRedirectTo)
 
     if apikeyUp is False:
@@ -172,17 +169,11 @@ async def redirect(request: Request):
         if getHostFrom(redirectTo) == getHostFrom(SERVICES_HOST):
             method = getMethodFrom(redirectTo)
             param = body
-
             if (method == "services"):
                 equalMark = redirectTo.index("=")
                 param = redirectTo[equalMark + 1:]
-                #availableServices = _getServices(param)
-                return _getServices(param)
-                # print(availableServices)
-
-                # return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
-
-                # return availableServices
+                aux = _getServices(param)
+                return aux
 
             elif (method == "up"):
                 return _enableApiKey(param)
@@ -196,22 +187,20 @@ async def redirect(request: Request):
         elif verbRedirect == "GET":
             response = requests.get(
                 url=redirectTo, json=body)
+
             logging.info(response)
+
         else:
             response = requests.put(
                 url=redirectTo, json=body)
 
-        print("BODY - 2: ")
-
         json_response = json.loads(response.text)
-
         print(json_response)
 
         #status = response.status_code
         # print(status)
 
     except Exception as e:
-        logging.info("PASO 6b")
 
         json_response = {
             "error": str(e),
