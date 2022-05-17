@@ -1,4 +1,12 @@
 def apikeyEntity(item) -> dict:
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4")
+    print(item["_id"])
+    print(item["apikey"])
+    print(item["name"])
+    print(item["active"])
+    print(item["creation_date"])
+    print(item["description"])
+
     return {
         "id": str(item["_id"]),
         "apikey": item["apikey"],

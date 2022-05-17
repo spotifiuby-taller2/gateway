@@ -6,6 +6,7 @@ from models.apikey import Apikey
 from services.apikeyFoundAndActive import apikey_found_and_active
 from services.auth_service import apiKeyExists
 from services.checkIfApyKeyUp import checkApikeyUp
+from services.getAvailableServices import getAvailableServicesFromDB
 from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, JSON_HEADER
 from typing import List
 from infrastructure.db.database import current_connection
@@ -24,40 +25,6 @@ router = APIRouter()
 
 # -----------------------------------------------------
 
-'''
-@router.get("/apikeys", response_model=List[Apikey], tags=["apikeys"])
-def getApikeys():
-    return apikeysEntity(current_connection.find())
-
-
-@router.get("/apikeys/{id}", response_model=Apikey, tags=["apikeys"])
-def getApikeyById(id: str):
-    return apikeyEntity(current_connection.find_one({"_id": ObjectId(id)}))
-
-
-@router.post("/apikeys", response_model=Apikey, tags=["apikeys"])
-def create_apikey(apikey: Apikey):
-    new_apikey = dict(apikey)
-    del new_apikey["id"]
-    id = current_connection.insert_one(new_apikey).inserted_id
-    return str(id)
-
-
-@router.delete("/apikeys/{id}", status_code=HTTP_204_NO_CONTENT, tags=["apikeys"])
-def getApikeyById(id: str):
-    apikeyEntity(current_connection.find_one_and_delete(
-        {"_id": ObjectId(id)}))
-    return Response(status_code=HTTP_204_NO_CONTENT)
-
-
-@router.put("/apikeys/{id}", tags=["apikeys"])
-def update_apikey(id: str, apikey: Apikey):
-    apikeyEntity(current_connection.find_one_and_update(
-        {"_id": ObjectId(id)}, {"$set": dict(apikey)}))
-    return apikeyEntity(current_connection.find_one({"_id": ObjectId(id)}))
-
-'''
-
 
 @router.post("/agregarapikey", response_model=Apikey, tags=["apikeys"])
 def create_apikey(apikey: Apikey):
@@ -69,6 +36,7 @@ def create_apikey(apikey: Apikey):
 
 # ***************************************************************************
 
+
 def _getServices(apiKey):
 
     logging.info("request a" + SERVICES_URL)
@@ -78,7 +46,10 @@ def _getServices(apiKey):
         error = {"error": "No Autorizado"}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
-    availableServices = apikeysEntity(current_connection.find())
+    # LIO
+    availableServices = getAvailableServicesFromDB()
+    print(availableServices)
+
     return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
 
 
@@ -205,7 +176,13 @@ async def redirect(request: Request):
             if (method == "services"):
                 equalMark = redirectTo.index("=")
                 param = redirectTo[equalMark + 1:]
+                #availableServices = _getServices(param)
                 return _getServices(param)
+                # print(availableServices)
+
+                # return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
+
+                # return availableServices
 
             elif (method == "up"):
                 return _enableApiKey(param)
