@@ -91,20 +91,20 @@ def _disableApiKey(body):
         error = {"error": "No Autorizado"}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
-    if 'apikeyToDisable' not in body:
+    if 'apiKeyToChange' not in body:
         error = {
             "error": "El campo apikeyToDisable no existe en el cuerpo de la solicitud"}
         return JSONResponse(status_code=HTTP_400_BAD_REQUEST, content=error)
     else:
-        apikeyToDisable = str(body['apikeyToDisable'])
+        apikeyToDisable = str(body['apiKeyToChange'])
 
-    existing_api_key = current_connection.find_one({"apikey": apikeyToDisable})
+    existing_api_key = current_connection.find_one({"apiKey": apikeyToDisable})
 
     if (existing_api_key == None):
         error = {"error": "El servicio indicado no existe"}
         return JSONResponse(status_code=HTTP_404_NOT_FOUND, content=error)
 
-    current_connection.update_one({"apikey": apikeyToDisable},
+    current_connection.update_one({"apiKey": apikeyToDisable},
                                   {"$set": {"active": False}})
 
     response_body = {"ok": "ok"}
@@ -181,7 +181,8 @@ async def redirect(request: Request):
                 return _enableApiKey(param)
 
             else:
-                return _disableApiKey(param)
+                #param = str(body['apiKeyToChange'])
+                return _disableApiKey(body)
 
         if verbRedirect == "POST":
             response = requests.post(

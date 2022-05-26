@@ -33,10 +33,21 @@ def getHostFrom(url):
 
 def getMethodFrom(redirectTo):
     firstColon = redirectTo.index(":")
-    firstSlash = redirectTo[firstColon:].index("/")
-    firstQuestionMark = redirectTo[firstSlash:].index("?")
-    if firstQuestionMark < 0:
-        secondSlash = redirectTo[firstSlash:].index("/")
-        return redirectTo[secondSlash + 1:]
+    subRedirectToFirstColon = redirectTo[firstColon+1:]
+    print("subRedirectTo: " + subRedirectToFirstColon)
 
-    return "services"
+    secondColon = subRedirectToFirstColon.index(":")
+    subRedirectToSecondColon = subRedirectToFirstColon[secondColon:]
+    print("subRedirectToSecondColon: " + subRedirectToSecondColon)
+
+    firstSlash = subRedirectToSecondColon.index("/")
+    if "services" not in subRedirectToSecondColon:
+        secondSlash = subRedirectToSecondColon.index("/")
+        subRedirectTo = subRedirectToSecondColon[secondSlash:]
+
+    else:
+        firstQuestionMark = subRedirectToSecondColon.index("?")
+        subRedirectTo = subRedirectToSecondColon[firstSlash +
+                                                 1:firstQuestionMark]
+
+    return subRedirectTo
