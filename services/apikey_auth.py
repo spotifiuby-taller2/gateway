@@ -177,7 +177,7 @@ async def redirect(request: Request):
                 aux = _getServices(param)
                 return aux
 
-            elif (method == "/apikeys/up"):
+            elif (method == "/apikeys/up" or method == "/apikeys/createservice"):
                 return _enableApiKey(body)
 
             else:
