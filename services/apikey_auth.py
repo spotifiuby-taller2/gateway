@@ -60,11 +60,11 @@ def _enableApiKey(body):
         error = {"error": "No Autorizado"}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
-    if 'apikeyToEnable' not in body:
+    if 'apiKeyToChange' not in body:
         apikeyToEnable = get_new_api_key()[:20]
         logging.debug("apiKeyToEnable: " + apikeyToEnable)
     else:
-        apikeyToEnable = str(body['apikeyToEnable'])
+        apikeyToEnable = str(body['apiKeyToChange'])
 
     existing_api_key = current_connection.find_one({"apiKey": apikeyToEnable})
 
@@ -78,7 +78,7 @@ def _enableApiKey(body):
         }
         current_connection.insert_one(data)
     else:
-        current_connection.update_one({"apikey": apikeyToEnable},
+        current_connection.update_one({"apiKey": apikeyToEnable},
                                       {"$set": {"active": True}})
 
     response_body = {"ok": "ok"}
@@ -177,8 +177,8 @@ async def redirect(request: Request):
                 aux = _getServices(param)
                 return aux
 
-            elif (method == "up"):
-                return _enableApiKey(param)
+            elif (method == "/apikeys/up"):
+                return _enableApiKey(body)
 
             else:
                 #param = str(body['apiKeyToChange'])
