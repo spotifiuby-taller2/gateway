@@ -1,18 +1,18 @@
 def apikeyEntity(item) -> dict:
-    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4")
+    '''
     print(item["_id"])
     print(item["apikey"])
     print(item["name"])
     print(item["active"])
     print(item["creation_date"])
     print(item["description"])
-
+    '''
     return {
         "id": str(item["_id"]),
-        "apikey": item["apikey"],
+        "apiKey": item["apiKey"],
         "name": item["name"],
         "active": item["active"],
-        "creation_date": item["creation_date"],
+        "creationDate": item["creationDate"],
         "description": item["description"]
     }
 

@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def apikey_found_and_active(apikey):
-    apikey = current_connection.find_one({"apikey": apikey})
+    apikey = current_connection.find_one({"apiKey": apikey})
     if (apikey == None):
         return False
     return (apikeyEntity(apikey))['active']

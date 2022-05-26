@@ -47,7 +47,9 @@ def _getServices(apiKey):
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
     availableServices = getAvailableServicesFromDB()
     print(availableServices)
-    return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
+
+    return availableServices
+    # return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
 
 
 def _enableApiKey(body):
@@ -71,7 +73,7 @@ def _enableApiKey(body):
             "apiKey": apikeyToEnable,
             "name": str(body['name']),
             "active": True,
-            "creation_date": 0,
+            "creationDate": 0,
             "description": str(body['description'])
         }
         current_connection.insert_one(data)
