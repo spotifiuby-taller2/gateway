@@ -7,6 +7,7 @@ from services.apikeyFoundAndActive import apikey_found_and_active
 from services.auth_service import apiKeyExists
 from services.checkIfApyKeyUp import checkApikeyUp
 from services.getAvailableServices import getAvailableServicesFromDB
+from services.logging_service import logInfo
 from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, JSON_HEADER
 from typing import List
 from infrastructure.db.database import current_connection
@@ -17,8 +18,10 @@ from starlette.responses import JSONResponse
 from utils.utils import get_new_api_key, getHostFrom, getMethodFrom
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
-
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 router = APIRouter()
 
@@ -46,7 +49,6 @@ def _getServices(apiKey):
         error = {"error": "No Autorizado"}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
     availableServices = getAvailableServicesFromDB()
-    print(availableServices)
 
     return availableServices
     # return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
@@ -54,7 +56,6 @@ def _getServices(apiKey):
 
 def _enableApiKey(body):
     logging.info("request a" + API_KEY_UP_URL)
-    logging.debug("body.apiKey: " + str(body['apiKey']))
 
     if apikey_found_and_active(str(body['apiKey'])) == False:
         error = {"error": "No Autorizado"}
@@ -62,7 +63,6 @@ def _enableApiKey(body):
 
     if 'apiKeyToChange' not in body:
         apikeyToEnable = get_new_api_key()[:20]
-        logging.debug("apiKeyToEnable: " + apikeyToEnable)
     else:
         apikeyToEnable = str(body['apiKeyToChange'])
 
@@ -139,7 +139,7 @@ methodToCall = {
 @router.post(REDIRECT_URL, tags=["services"])
 async def redirect(request: Request):
     body = await request.json()
-    logging.info("request a" + REDIRECT_URL)
+    logInfo("request a" + REDIRECT_URL)
     currentApikey = str(body['apiKey'])
     currentRedirectTo = str(body['redirectTo'])
     apikeyUp = checkApikeyUp(currentApikey, currentRedirectTo)
@@ -167,6 +167,7 @@ async def redirect(request: Request):
     }
 
     status = 200
+    # LIO
     try:
         if getHostFrom(redirectTo) == getHostFrom(SERVICES_HOST):
             method = getMethodFrom(redirectTo)
@@ -181,7 +182,6 @@ async def redirect(request: Request):
                 return _enableApiKey(body)
 
             else:
-                #param = str(body['apiKeyToChange'])
                 return _disableApiKey(body)
 
         if verbRedirect == "POST":

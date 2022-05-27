@@ -2,7 +2,14 @@ import os
 from dotenv import load_dotenv
 #del os.environ['SERVICES_HOST']
 
-load_dotenv()
+ENV_FILE_TO_USE = '.env.development'
+
+# This variable could be set in a Dockerfile in order to
+# check if we are in production or not.
+if os.environ['IN_PRODUCTION']:
+    ENV_FILE_TO_USE = '.env.production'
+
+load_dotenv(dotenv_path=ENV_FILE_TO_USE)
 
 # ====== Production vs Development config ======
 ISDEVELOPMENT = 2022
