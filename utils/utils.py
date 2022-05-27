@@ -27,18 +27,15 @@ def getHostFrom(url):
     if endIndex == -1:
         return destinyHost
 
-    print("destinyHost: " + destinyHost[:endIndex])
     return destinyHost[:endIndex]
 
 
 def getMethodFrom(redirectTo):
     firstColon = redirectTo.index(":")
     subRedirectToFirstColon = redirectTo[firstColon+1:]
-    print("subRedirectTo: " + subRedirectToFirstColon)
 
     secondColon = subRedirectToFirstColon.index(":")
     subRedirectToSecondColon = subRedirectToFirstColon[secondColon:]
-    print("subRedirectToSecondColon: " + subRedirectToSecondColon)
 
     firstSlash = subRedirectToSecondColon.index("/")
     if "services" not in subRedirectToSecondColon:
