@@ -7,7 +7,7 @@ from exceptions.spotifiubi_error import SpotifiubiException
 from sqlalchemy.exc import SQLAlchemyError
 from services import apikey_auth
 import logging
-
+import uvicorn
 
 app = FastAPI(title="Spotifiubi - services",
               description="services for Spotifiubi",
@@ -54,3 +54,6 @@ async def sql_exception_handler(request, exc):
 
 
 app.include_router(apikey_auth.router)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

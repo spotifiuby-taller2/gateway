@@ -6,4 +6,5 @@ pymongo==4.1.1
 requests==2.22.0
 SQLAlchemy==1.4.35
 starlette==0.17.1
-dotenv
+python-dotenv
+uvicorn
