@@ -6,7 +6,8 @@ from models.apikey import Apikey
 
 # connection = connect(db="spotify", host="localhost", port=27017)
 connection = MongoClient('localhost', 27017)
-
+if connection is not None:
+    print("CONECTADO A LA BASE DE DATOS")
 current_connection = connection.spotify.apikey
 
 

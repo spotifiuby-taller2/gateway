@@ -7,7 +7,8 @@ logging.basicConfig(level=logging.DEBUG)
 def checkHostExists(destinyHost):
     response = current_connection.find_one(
         {"description": destinyHost}, {"active": True})
-
+    print("LIO LIO LIO")
+    print(response)
     if response is None:
         logging.debug("No se pudo consultar las api key existentes")
         return False
