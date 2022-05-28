@@ -2,6 +2,7 @@
 
 build
 coverage
+coverage.xml
 .coverage
 logs/*
 
