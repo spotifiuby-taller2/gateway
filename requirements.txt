@@ -8,4 +8,5 @@ SQLAlchemy==1.4.35
 starlette==0.17.1
 python-dotenv
 uvicorn
+pytest
 coverage
