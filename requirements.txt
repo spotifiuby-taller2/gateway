@@ -10,3 +10,4 @@ python-dotenv
 uvicorn
 pytest
 pytest-cov
+python-coveralls
