@@ -23,7 +23,5 @@ jobs:
       - name: tests
         run: pytest
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v2
