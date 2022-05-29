@@ -28,19 +28,19 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: coverage.xml
-deploy:
-  if: github.ref == 'refs/heads/main'
-  runs-on: ubuntu-latest
-  needs: test
-  steps:
-    - uses: actions/checkout@v2
-    - uses: akhileshns/heroku-deploy@v3.12.12
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-        heroku_email: ${{secrets.HEROKU_EMAIL}}
-        usedocker: true
-      #env:
-      #  HD_DD_AGENT_MAJOR_VERSION: 7
-      #  HD_DD_API_KEY: ${{secrets.DD_API_KEY}}
-      #  HD_DD_DYNO_HOST: true
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
+        #env:
+        #  HD_DD_AGENT_MAJOR_VERSION: 7
+        #  HD_DD_API_KEY: ${{secrets.DD_API_KEY}}
+        #  HD_DD_DYNO_HOST: true
