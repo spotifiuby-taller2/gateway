@@ -40,7 +40,7 @@ deploy:
         heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
         heroku_email: ${{secrets.HEROKU_EMAIL}}
         usedocker: true
-      env:
-        HD_DD_AGENT_MAJOR_VERSION: 7
-        HD_DD_API_KEY: ${{secrets.DD_API_KEY}}
-        HD_DD_DYNO_HOST: true
+      #env:
+      #  HD_DD_AGENT_MAJOR_VERSION: 7
+      #  HD_DD_API_KEY: ${{secrets.DD_API_KEY}}
+      #  HD_DD_DYNO_HOST: true
