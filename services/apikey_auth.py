@@ -50,8 +50,8 @@ def _getServices(apiKey):
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
     availableServices = getAvailableServicesFromDB()
 
-    return availableServices
-    # return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
+    #return availableServices
+    return JSONResponse(status_code=HTTP_200_OK, content=availableServices)
 
 
 def _enableApiKey(body):

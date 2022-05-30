@@ -11,3 +11,4 @@ uvicorn
 pytest
 pytest-cov
 python-coveralls
+pymongo[srv]

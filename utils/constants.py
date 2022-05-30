@@ -6,7 +6,10 @@ ENV_FILE_TO_USE = '.env.development'
 
 # This variable could be set in a Dockerfile in order to
 # check if we are in production or not.
-if os.environ['IN_PRODUCTION']:
+
+try:
+    os.environ['IN_PRODUCTION']
+except KeyError:
     ENV_FILE_TO_USE = '.env.production'
 
 load_dotenv(dotenv_path=ENV_FILE_TO_USE)

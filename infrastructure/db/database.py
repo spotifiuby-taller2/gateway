@@ -1,15 +1,21 @@
 from bson import ObjectId
 from pymongo import MongoClient
 from mongoengine import connect
+import os
 
 from models.apikey import Apikey
 
-# connection = connect(db="spotify", host="localhost", port=27017)
-connection = MongoClient('localhost', 27017)
+try:
+    os.environ['IN_PRODUCTION']
+    # connection = connect(db="spotify", host="localhost", port=27017)
+    connection = MongoClient('localhost', 27017)
+    current_connection = connection.spotify.apikey
+except KeyError:
+    connection = MongoClient("mongodb+srv://taller2:rensenbrinklepegoalpalo@cluster0.nyzrv.mongodb.net/?retryWrites=true&w=majority")
+    current_connection = connection.myFirstDatabase.apikey
+
 if connection is not None:
     print("CONECTADO A LA BASE DE DATOS")
-current_connection = connection.spotify.apikey
-
 
 '''
 def ApiKeyExists(id):
