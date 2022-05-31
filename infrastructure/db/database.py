@@ -6,7 +6,7 @@ import os
 from models.apikey import Apikey
 
 try:
-    os.environ['IN_PRODUCTION']
+    os.environ['IN_DEVELOPMENT']
     # connection = connect(db="spotify", host="localhost", port=27017)
     connection = MongoClient('localhost', 27017)
     current_connection = connection.spotify.apikey

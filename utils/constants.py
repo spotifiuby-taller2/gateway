@@ -2,15 +2,15 @@ import os
 from dotenv import load_dotenv
 #del os.environ['SERVICES_HOST']
 
-ENV_FILE_TO_USE = '.env.development'
+ENV_FILE_TO_USE = '.env.production'
 
 # This variable could be set in a Dockerfile in order to
 # check if we are in production or not.
 
 try:
-    os.environ['IN_PRODUCTION']
+    os.environ['IN_DEVELOPMENT']
 except KeyError:
-    ENV_FILE_TO_USE = '.env.production'
+    ENV_FILE_TO_USE = '.env.development'
 
 load_dotenv(dotenv_path=ENV_FILE_TO_USE)
 
