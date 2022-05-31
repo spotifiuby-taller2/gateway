@@ -14,6 +14,8 @@ except KeyError:
     connection = MongoClient("mongodb+srv://taller2:rensenbrinklepegoalpalo@cluster0.nyzrv.mongodb.net/?retryWrites=true&w=majority")
     current_connection = connection.myFirstDatabase.apikey
 
+print(connection)
+
 if connection is not None:
     print("CONECTADO A LA BASE DE DATOS")
 
