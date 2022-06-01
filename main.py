@@ -9,6 +9,8 @@ from services import apikey_auth
 import logging
 import uvicorn
 
+from services.logging_service import logInfo
+
 app = FastAPI(title="Spotifiubi - services",
               description="services for Spotifiubi",
               version="0.0.1")
@@ -29,13 +31,6 @@ app.add_middleware(
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
     error = {"message": exc.detail}
-    return JSONResponse(status_code=exc.status_code, content=error)
-
-
-@app.exception_handler(SpotifiubiException)
-async def ubademy_exception_handler(request, exc):
-    error = {"message": exc.detail}
-    logging.error(f"status_code: {exc.status_code} message: {exc.detail}")
     return JSONResponse(status_code=exc.status_code, content=error)
 
 

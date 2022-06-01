@@ -8,7 +8,7 @@ from services.auth_service import apiKeyExists
 from services.checkIfApyKeyUp import checkApikeyUp
 from services.getAvailableServices import getAvailableServicesFromDB
 from services.logging_service import logInfo
-from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, JSON_HEADER
+from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, CHECK_URL
 from typing import List
 from infrastructure.db.database import current_connection
 from infrastructure.schemas.apikey import apikeyEntity, apikeysEntity
@@ -136,6 +136,24 @@ methodToCall = {
 }
 
 
+@router.post(CHECK_URL, tags=["services"])
+async def check(request: Request):
+    body = await request.json()
+    logInfo("request a" + CHECK_URL)
+    current_apikey = str(body['apiKey'])
+    apikeyUp = apikey_found_and_active(current_apikey)
+
+    if apikeyUp is False:
+        error = {"error": "No Autorizado"}
+        return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
+
+    json_response = {
+        "ok": "Autorizado",
+    }
+
+    return JSONResponse(status_code=HTTP_200_OK, content=json_response)
+
+
 @router.post(REDIRECT_URL, tags=["services"])
 async def redirect(request: Request):
     body = await request.json()
@@ -198,16 +216,12 @@ async def redirect(request: Request):
                 url=redirectTo, json=body)
 
         json_response = json.loads(response.text)
-        print(json_response)
 
-        #status = response.status_code
-        # print(status)
 
     except Exception as e:
-
         json_response = {
             "error": str(e),
         }
-        print("no entro")
         status = 500
+
     return JSONResponse(status_code=status, content=json_response)

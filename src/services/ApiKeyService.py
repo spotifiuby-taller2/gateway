@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 
 class ApiKeyService():
     def defineEvents(app):
-        x = 5
+
         @app.post(REDIRECT_URL)
         async def redirect():
             logger.info("Request to /redirect")
