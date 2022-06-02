@@ -30,6 +30,6 @@ jobs:
         uses: AndreMiras/coveralls-python-action@develop
         #uses: coverallsapp/github-action@master
         with:
-          flag-name: Tests
+          flag-name: testsgit br
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: coverage.xml
