@@ -25,7 +25,13 @@ jobs:
 
       - name: testsgit br
         run: python -m pytest --cov=./tests --cov-report xml
-
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    #needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
         with:
