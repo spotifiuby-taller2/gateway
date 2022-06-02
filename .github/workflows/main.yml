@@ -32,4 +32,5 @@ jobs:
         with:
           flag-name: testsgit br
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ${{ github.workspace }}/coverage.xml
+          path-to-lcov: coverage.xml
+          #${{ github.workspace }}/
