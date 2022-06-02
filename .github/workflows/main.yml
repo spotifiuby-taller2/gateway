@@ -27,7 +27,9 @@ jobs:
         run: python -m pytest --cov=./tests --cov-report xml
 
       - name: Coveralls
-        uses: coverallsapp/github-action@master
+        uses: AndreMiras/coveralls-python-action@develop
+        #uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.xml
+          flag-name: Tests
+          #github-token: ${{ secrets.GITHUB_TOKEN }}
+          #path-to-lcov: coverage.xml
