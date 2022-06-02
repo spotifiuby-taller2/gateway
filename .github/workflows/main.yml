@@ -31,6 +31,6 @@ jobs:
         #uses: coverallsapp/github-action@master
         with:
           flag-name: testsgit br
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.xml
+          #github-token: ${{ secrets.GITHUB_TOKEN }}
+          #path-to-lcov: coverage.xml
           #${{ github.workspace }}/
