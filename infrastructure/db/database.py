@@ -10,11 +10,16 @@ from utils.constants import RUN_MIGRATIONS
 
 try:
     os.environ['IN_PRODUCTION']
-    connection = MongoClient("mongodb+srv://taller2:rensenbrinklepegoalpalo@cluster0.nyzrv.mongodb.net/?retryWrites=true&w=majority")
+    connection = MongoClient(
+        "mongodb+srv://taller2:rensenbrinklepegoalpalo@cluster0.nyzrv.mongodb.net/?retryWrites=true&w=majority")
     current_connection = connection.myFirstDatabase.apikey
+    logInfo("Connected to Atlas remote database")
+
 except KeyError:
     connection = MongoClient('localhost', 27017)
     current_connection = connection.spotify.apikey
+    logInfo("Connected to local database")
+
 
 if connection is not None:
     logInfo("CONECTADO A LA BASE DE DATOS")

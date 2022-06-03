@@ -2,20 +2,22 @@ import os
 from dotenv import load_dotenv
 import pathlib
 
-#del os.environ['SERVICES_HOST']
+del os.environ['SERVICES_HOST']
 
-current_path = str( pathlib.Path(__file__) \
-                           .parent \
-                           .resolve() ).split("utils")[0]
+current_path = str(pathlib.Path(__file__)
+                   .parent
+                   .resolve()).split("utils")[0]
 
-ENV_FILE_TO_USE = current_path + '/.env.development'
+#ENV_FILE_TO_USE = current_path + '/.env.development'
 
 # This variable could be set in a Dockerfile in order to
 # check if we are in production or not.
 try:
     os.environ['IN_PRODUCTION']
-except KeyError:
     ENV_FILE_TO_USE = current_path + '/.env.production'
+
+except KeyError:
+    ENV_FILE_TO_USE = current_path + '/.env.development'
 
 load_dotenv(dotenv_path=ENV_FILE_TO_USE)
 
@@ -29,7 +31,7 @@ REDIRECT_URL = "/redirect"
 API_KEY_DOWN_URL = API_KEY_URL + "/down"
 API_KEY_UP_URL = API_KEY_URL + "/up"
 SERVICES_URL = "/services"
-CHECK_URL = "/check";
+CHECK_URL = "/check"
 
 SERVICES_HOST = os.getenv("SERVICES_HOST") + "/"
 
