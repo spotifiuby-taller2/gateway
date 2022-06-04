@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import pathlib
 
-del os.environ['SERVICES_HOST']
+#del os.environ['SERVICES_HOST']
 
 current_path = str(pathlib.Path(__file__)
                    .parent
