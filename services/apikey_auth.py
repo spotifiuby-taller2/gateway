@@ -141,7 +141,13 @@ async def check(request: Request):
     body = await request.json()
     logInfo("request a" + CHECK_URL)
     current_apikey = str(body['apiKey'])
-    apikeyUp = apikey_found_and_active(current_apikey)
+
+    try:
+        current_redirect_to = str(body['redirectTo'])
+    except KeyError:
+        current_redirect_to = ""
+
+    apikeyUp = checkApikeyUp(current_apikey, current_redirect_to)
 
     if apikeyUp is False:
         error = {"error": "No Autorizado"}

@@ -11,12 +11,11 @@ def checkApikeyUp(apikey, destiny):
     print("destiny: " + destiny)
 
     if apikey_found_and_active(apikey) == False:
-        error = {"error": "No Autorizado"}
         return False
 
-    if destiny is None:
+    if destiny is None or destiny == "":
         return True
-# LIO
+
     destinyHost = getHostFrom(destiny)
 
     if destinyHost != getHostFrom(SERVICES_HOST):
