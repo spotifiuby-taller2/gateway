@@ -8,7 +8,8 @@ from services.auth_service import apiKeyExists
 from services.checkIfApyKeyUp import checkApikeyUp
 from services.getAvailableServices import getAvailableServicesFromDB
 from services.logging_service import logInfo
-from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, CHECK_URL
+from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, CHECK_URL, \
+    MSG_NO_AUTORIZADO
 from typing import List
 from infrastructure.db.database import current_connection
 from infrastructure.schemas.apikey import apikeyEntity, apikeysEntity
@@ -46,7 +47,7 @@ def _getServices(apiKey):
     logging.debug("body.apiKey: " + str(apiKey))
 
     if apikey_found_and_active(str(apiKey)) == False:
-        error = {"error": "No Autorizado"}
+        error = {"error": MSG_NO_AUTORIZADO}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
     availableServices = getAvailableServicesFromDB()
 
@@ -58,7 +59,7 @@ def _enableApiKey(body):
     logging.info("request a" + API_KEY_UP_URL)
 
     if apikey_found_and_active(str(body['apiKey'])) == False:
-        error = {"error": "No Autorizado"}
+        error = {"error": MSG_NO_AUTORIZADO}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
     if 'apiKeyToChange' not in body:
@@ -88,7 +89,7 @@ def _enableApiKey(body):
 def _disableApiKey(body):
     logging.info("request a" + API_KEY_DOWN_URL)
     if apikey_found_and_active(str(body['apiKey'])) == False:
-        error = {"error": "No Autorizado"}
+        error = {"error": MSG_NO_AUTORIZADO}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
     if 'apiKeyToChange' not in body:
@@ -150,7 +151,7 @@ async def check(request: Request):
     apikeyUp = checkApikeyUp(current_apikey, current_redirect_to)
 
     if apikeyUp is False:
-        error = {"error": "No Autorizado"}
+        error = {"error": MSG_NO_AUTORIZADO}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
     json_response = {
@@ -169,7 +170,7 @@ async def redirect(request: Request):
     apikeyUp = checkApikeyUp(currentApikey, currentRedirectTo)
 
     if apikeyUp is False:
-        error = {"error": "No Autorizado"}
+        error = {"error": MSG_NO_AUTORIZADO}
         return JSONResponse(status_code=HTTP_401_UNAUTHORIZED, content=error)
 
     redirectParams = ""

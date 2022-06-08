@@ -45,3 +45,5 @@ JSON_HEADER = {
 SHA_LEN = 64
 
 RUN_MIGRATIONS = True
+
+MSG_NO_AUTORIZADO = "No autorizado"

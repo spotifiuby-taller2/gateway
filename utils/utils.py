@@ -1,8 +1,10 @@
-#from asyncio.log import logger
+# from asyncio.log import logger
 import hashlib
 import string
 import random
 import logging
+import os
+
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -32,7 +34,7 @@ def getHostFrom(url):
 
 def getMethodFrom(redirectTo):
     firstColon = redirectTo.index(":")
-    subRedirectToFirstColon = redirectTo[firstColon+1:]
+    subRedirectToFirstColon = redirectTo[firstColon + 1:]
 
     secondColon = subRedirectToFirstColon.index(":")
     subRedirectToSecondColon = subRedirectToFirstColon[secondColon:]
@@ -48,3 +50,12 @@ def getMethodFrom(redirectTo):
                                                  1:firstQuestionMark]
 
     return subRedirectTo
+
+
+def is_production():
+    try:
+        os.environ['IN_PRODUCTION']
+        return True
+
+    except KeyError:
+        return False
