@@ -5,6 +5,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def checkHostExists(destinyHost):
+    if "localhost" in destinyHost:
+        return True
+
     response = current_connection.find_one(
         {"description": destinyHost, "active": True})
 
