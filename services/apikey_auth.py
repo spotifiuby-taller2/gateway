@@ -192,7 +192,7 @@ async def redirect(request: Request):
     }
 
     status = 200
-    # LIO
+
     try:
         if getHostFrom(redirectTo) == getHostFrom(SERVICES_HOST):
             method = getMethodFrom(redirectTo)
@@ -212,8 +212,15 @@ async def redirect(request: Request):
         if verbRedirect == "POST":
             response = requests.post(
                 url=redirectTo, json=body)
+
         elif verbRedirect == "GET":
             response = requests.get(
+                url=redirectTo, json=body)
+
+            logging.info(response)
+
+        elif verbRedirect == "PATCH":
+            response = requests.patch(
                 url=redirectTo, json=body)
 
             logging.info(response)
