@@ -8,9 +8,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def checkHostExists(destinyHost):
-    if "localhost" in destinyHost and not is_production():
-        return True
-
     response = current_connection.find_one(
         {"description": destinyHost, "active": True})
 
