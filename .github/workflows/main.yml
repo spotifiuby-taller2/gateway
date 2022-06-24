@@ -43,6 +43,7 @@ jobs:
           parallel-finished: true
           
   deploy:
+    needs: coveralls_finish
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     #needs: test
