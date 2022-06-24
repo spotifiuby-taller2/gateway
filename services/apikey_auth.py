@@ -198,15 +198,18 @@ async def redirect(request: Request):
             method = getMethodFrom(redirectTo)
             param = body
             if (method == "services"):
+                logging.info("Get services")
                 equalMark = redirectTo.index("=")
                 param = redirectTo[equalMark + 1:]
                 aux = _getServices(param)
                 return aux
 
             elif (method == "/apikeys/up" or method == "/apikeys/createservice"):
+                logging.info("Activate host")
                 return _enableApiKey(body)
 
             else:
+                logging.info("Disable host")
                 return _disableApiKey(body)
 
         if verbRedirect == "POST":

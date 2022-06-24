@@ -19,6 +19,10 @@ def checkApikeyUp(apikey, destiny):
 
     destinyHost = getHostFrom(destiny)
 
+    logging.info("destinyHost: " + destinyHost)
+
+    logging.info("constantHost: " + getHostFrom(SERVICES_HOST))
+
     if destinyHost != getHostFrom(SERVICES_HOST):
         aux = checkHostExists(destinyHost)
         return aux
