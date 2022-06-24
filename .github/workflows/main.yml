@@ -25,7 +25,7 @@ jobs:
           #comment
 
       - name: testsgit br
-        run: python -m pytest --cov=./tests --cov-report xml
+        run: python -m pytest --cov=./services --cov-report xml
 
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
