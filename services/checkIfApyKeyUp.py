@@ -1,3 +1,4 @@
+import logging
 
 from starlette.responses import JSONResponse
 from starlette.status import *
@@ -8,7 +9,7 @@ from utils.utils import getHostFrom
 
 
 def checkApikeyUp(apikey, destiny):
-    print("destiny: " + destiny)
+    logging.info("destiny: " + destiny)
 
     if apikey_found_and_active(apikey) == False:
         return False
