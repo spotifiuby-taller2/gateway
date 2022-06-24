@@ -30,12 +30,12 @@ router = APIRouter()
 # -----------------------------------------------------
 
 
-@router.post("/agregarapikey", response_model=Apikey, tags=["apikeys"])
-def create_apikey(apikey: Apikey):
-    new_apikey = dict(apikey)
-    del new_apikey["id"]
-    id = current_connection.insert_one(new_apikey).inserted_id
-    return str(id)
+#@router.post("/agregarapikey", response_model=Apikey, tags=["apikeys"])
+#def create_apikey(apikey: Apikey):
+#    new_apikey = dict(apikey)
+#    del new_apikey["id"]
+#    id = current_connection.insert_one(new_apikey).inserted_id
+#    return str(id)
 
 
 # ***************************************************************************
