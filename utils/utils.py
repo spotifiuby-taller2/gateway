@@ -36,10 +36,16 @@ def getMethodFrom(redirectTo):
     firstColon = redirectTo.index(":")
     subRedirectToFirstColon = redirectTo[firstColon + 1:]
 
-    secondColon = subRedirectToFirstColon.index(":")
-    subRedirectToSecondColon = subRedirectToFirstColon[secondColon:]
+    try:
+        secondColon = subRedirectToFirstColon.index(":")
+        subRedirectToSecondColon = subRedirectToFirstColon[secondColon:]
+    except Exception as e:
+        # Production
+        reference = subRedirectToFirstColon.index("appgateway.herokuapp.com")
+        subRedirectToSecondColon = subRedirectToFirstColon[reference:]
 
     firstSlash = subRedirectToSecondColon.index("/")
+
     if "services" not in subRedirectToSecondColon:
         secondSlash = subRedirectToSecondColon.index("/")
         subRedirectTo = subRedirectToSecondColon[secondSlash:]

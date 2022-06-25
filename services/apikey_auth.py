@@ -1,4 +1,6 @@
 import json
+import traceback
+
 import requests
 from bson import ObjectId
 from fastapi import APIRouter, Request
@@ -195,8 +197,13 @@ async def redirect(request: Request):
 
     try:
         if getHostFrom(redirectTo) == getHostFrom(SERVICES_HOST):
+            # logging.info("redirectTo: " + redirectTo)
+
             method = getMethodFrom(redirectTo)
             param = body
+
+            logging.info("method: " + method)
+
             if (method == "services"):
                 logging.info("Get services")
                 equalMark = redirectTo.index("=")
@@ -236,6 +243,8 @@ async def redirect(request: Request):
 
 
     except Exception as e:
+        logging.error(e)
+
         json_response = {
             "error": str(e),
         }
