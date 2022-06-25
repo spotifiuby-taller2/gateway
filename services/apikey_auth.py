@@ -29,20 +29,6 @@ logging.basicConfig(
 router = APIRouter()
 
 
-# -----------------------------------------------------
-
-
-#@router.post("/agregarapikey", response_model=Apikey, tags=["apikeys"])
-#def create_apikey(apikey: Apikey):
-#    new_apikey = dict(apikey)
-#    del new_apikey["id"]
-#    id = current_connection.insert_one(new_apikey).inserted_id
-#    return str(id)
-
-
-# ***************************************************************************
-
-
 def _getServices(apiKey):
 
     logging.info("request a" + SERVICES_URL)
@@ -80,6 +66,7 @@ def _enableApiKey(body):
             "description": str(body['description'])
         }
         current_connection.insert_one(data)
+
     else:
         current_connection.update_one({"apiKey": apikeyToEnable},
                                       {"$set": {"active": True}})
