@@ -5,12 +5,12 @@ import requests
 from bson import ObjectId
 from fastapi import APIRouter, Request
 from models.apikey import Apikey
-from services.apikeyFoundAndActive import apikey_found_and_active
+from services.apikey_found_and_active import apikey_found_and_active
 from services.auth_service import apiKeyExists
-from services.checkIfApyKeyUp import checkApikeyUp
-from services.getAvailableServices import getAvailableServicesFromDB
+from services.check_if_api_key_up import checkApikeyUp
+from services.get_available_services import getAvailableServicesFromDB
 from services.logging_service import logInfo
-from utils.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, CHECK_URL, \
+from helpers.constants import API_KEY_UP_URL, API_KEY_DOWN_URL, REDIRECT_URL, SERVICES_HOST, SERVICES_URL, CHECK_URL, \
     MSG_NO_AUTORIZADO
 from typing import List
 from infrastructure.db.database import current_connection
@@ -18,7 +18,7 @@ from infrastructure.schemas.apikey import apikeyEntity, apikeysEntity
 from models.apikey import Apikey
 from starlette.status import *
 from starlette.responses import JSONResponse
-from utils.utils import get_new_api_key, getHostFrom, getMethodFrom
+from helpers.utils import get_new_api_key, getHostFrom, getMethodFrom
 
 import logging
 logging.basicConfig(
@@ -27,20 +27,6 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S')
 
 router = APIRouter()
-
-
-# -----------------------------------------------------
-
-
-#@router.post("/agregarapikey", response_model=Apikey, tags=["apikeys"])
-#def create_apikey(apikey: Apikey):
-#    new_apikey = dict(apikey)
-#    del new_apikey["id"]
-#    id = current_connection.insert_one(new_apikey).inserted_id
-#    return str(id)
-
-
-# ***************************************************************************
 
 
 def _getServices(apiKey):
@@ -80,6 +66,7 @@ def _enableApiKey(body):
             "description": str(body['description'])
         }
         current_connection.insert_one(data)
+
     else:
         current_connection.update_one({"apiKey": apikeyToEnable},
                                       {"$set": {"active": True}})

@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import and_, create_engine
 from constants import DATABASE_URI
-from Apikey import Apikey, Base
+from apikey import Apikey, Base
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 

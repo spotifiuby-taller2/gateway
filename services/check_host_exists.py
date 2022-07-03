@@ -2,7 +2,7 @@ import logging
 from infrastructure.db.database import current_connection
 import logging
 
-from utils.utils import is_production
+from helpers.utils import is_production
 
 logging.basicConfig(level=logging.DEBUG)
 
