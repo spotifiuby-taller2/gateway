@@ -6,7 +6,7 @@ import pathlib
 
 current_path = str(pathlib.Path(__file__)
                    .parent
-                   .resolve()).split("utils")[0]
+                   .resolve()).split("helpers")[0]
 
 #ENV_FILE_TO_USE = current_path + '/.env.development'
 

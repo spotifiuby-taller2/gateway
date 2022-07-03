@@ -2,10 +2,10 @@ import logging
 
 from starlette.responses import JSONResponse
 from starlette.status import *
-from services.apikeyFoundAndActive import apikey_found_and_active
-from services.checkHostExists import checkHostExists
-from utils.constants import SERVICES_HOST
-from utils.utils import getHostFrom
+from services.apikey_found_and_active import apikey_found_and_active
+from services.check_host_exists import checkHostExists
+from helpers.constants import SERVICES_HOST
+from helpers.utils import getHostFrom
 
 
 def checkApikeyUp(apikey, destiny):

@@ -1,7 +1,7 @@
 import pytest
 
 from infrastructure.schemas.apikey import apikeyEntity
-from services.apikeyFoundAndActive import apikey_found_and_active
+from services.apikey_found_and_active import apikey_found_and_active
 from services.apikey_auth import _getServices, getServices, _enableApiKey, enableApiKey, check, _disableApiKey
 
 from unittest.mock import patch
@@ -12,13 +12,13 @@ from fastapi.testclient import TestClient
 
 import sys
 
-from services.checkHostExists import checkHostExists
-from services.checkIfApyKeyUp import checkApikeyUp
-from services.getAvailableServices import getAvailableServicesFromDB
+from services.check_host_exists import checkHostExists
+from services.check_if_api_key_up import checkApikeyUp
+from services.get_available_services import getAvailableServicesFromDB
 
-sys.path.append('../utils/constants.py')
+sys.path.append('../helpers/constants.py')
 
-from utils import constants
+from helpers import constants
 
 client = TestClient(app)
 
@@ -216,7 +216,7 @@ async def test_16_redirect(*args):
     assert "not found" in str(response.json())
 
 
-@patch("services.apikeyFoundAndActive.current_connection.find_one", return_value=None)
+@patch("services.apikey_found_and_active.current_connection.find_one", return_value=None)
 async def test_17_apiKey_found_and_active(apikey):
     active = apikey_found_and_active(apikey)
 
@@ -224,7 +224,7 @@ async def test_17_apiKey_found_and_active(apikey):
 
 
 @pytest.mark.asyncio
-@patch("services.apikeyFoundAndActive.current_connection.find_one", return_value=None)
+@patch("services.apikey_found_and_active.current_connection.find_one", return_value=None)
 async def test_18_checkHostExistsIsFalse(*args):
     hostExists = checkHostExists(dummy_value)
 
@@ -232,7 +232,7 @@ async def test_18_checkHostExistsIsFalse(*args):
 
 
 @pytest.mark.asyncio
-@patch("services.apikeyFoundAndActive.current_connection.find_one", return_value="something")
+@patch("services.apikey_found_and_active.current_connection.find_one", return_value="something")
 async def test_19_checkHostExists(*args):
     hostExists = checkHostExists(dummy_value)
 
@@ -240,7 +240,7 @@ async def test_19_checkHostExists(*args):
 
 
 @pytest.mark.asyncio
-@patch("services.checkIfApyKeyUp.apikey_found_and_active", return_value=False)
+@patch("services.check_if_api_key_up.apikey_found_and_active", return_value=False)
 async def test_20_checkApikeyUpNotActive(*args):
     apikeyUp = checkApikeyUp(dummy_value, dummy_value)
 
@@ -248,7 +248,7 @@ async def test_20_checkApikeyUpNotActive(*args):
 
 
 @pytest.mark.asyncio
-@patch("services.checkIfApyKeyUp.apikey_found_and_active", return_value=True)
+@patch("services.check_if_api_key_up.apikey_found_and_active", return_value=True)
 async def test_21_checkApikeyUpDestinyIsNone(*args):
     apikeyUp = checkApikeyUp(dummy_value, "")
 
@@ -256,8 +256,8 @@ async def test_21_checkApikeyUpDestinyIsNone(*args):
 
 
 @pytest.mark.asyncio
-@patch("services.apikeyFoundAndActive.current_connection.find_one", return_value="http://something/")
-@patch("services.checkIfApyKeyUp.apikey_found_and_active", return_value=True)
+@patch("services.apikey_found_and_active.current_connection.find_one", return_value="http://something/")
+@patch("services.check_if_api_key_up.apikey_found_and_active", return_value=True)
 async def test_22_checkApikeyUpDestinySameAsHost(*args):
     apikeyUp = checkApikeyUp(dummy_value, "http://something/")
 

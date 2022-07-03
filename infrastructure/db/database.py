@@ -6,7 +6,7 @@ import os
 from infrastructure.db.migrations import run_migrations
 from models.apikey import Apikey
 from services.logging_service import logInfo
-from utils.constants import RUN_MIGRATIONS
+from helpers.constants import RUN_MIGRATIONS
 
 try:
     os.environ['IN_PRODUCTION']
