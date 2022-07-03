@@ -1,6 +1,6 @@
 # Gateway
 
-[![Coverage Status](https://coveralls.io/repos/github/spotifiuby-taller2/gateway/badge.svg?t=lsi0g7)](https://coveralls.io/github/spotifiuby-taller2/gateway)
+[![Coverage Status](https://coveralls.io/repos/github/spotifiuby-taller2/gateway/badge.svg?branch=main&t=lsi0g7)](https://coveralls.io/github/spotifiuby-taller2/gateway?branch=main)
 
 ### Instalación y configuración
 
