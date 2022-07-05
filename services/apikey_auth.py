@@ -222,6 +222,12 @@ async def redirect(request: Request):
 
             logging.info(response)
 
+        elif verbRedirect == "DELETE":
+            response = requests.delete(
+                url=redirectTo, json=body)
+
+            logging.info(response)
+
         else:
             response = requests.put(
                 url=redirectTo, json=body)
